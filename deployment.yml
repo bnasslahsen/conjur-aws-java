@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conjur-aws-java
+  namespace: bnl-demo-app-ns
+  labels:
+    app: conjur-aws-java
+spec:
+  selector:
+    matchLabels:
+      app: conjur-aws-java
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: conjur-aws-java
+    spec:
+      serviceAccountName: conjur-aws-java-sa
+      containers:
+        - name: conjur-aws-java
+          image: bnasslahsen/conjur-aws-java
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: conjur-connect-aws-java
+
