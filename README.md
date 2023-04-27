@@ -4,4 +4,4 @@
 - Build the `conjur-spring-boot-demos`
 ```shell
 mvn clean spring-boot:build-image
-```
+```# conjur-aws-java
