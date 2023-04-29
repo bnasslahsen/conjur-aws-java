@@ -1,3 +1,10 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: conjur-aws-java-sa
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::179196310045:role/bnl-eks-pod-role
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

@@ -11,43 +11,45 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.10</version>
-		<relativePath/> 
+		<version>2.7.11</version>
+		<relativePath/>
 	</parent>
 
 	<properties>
 		<conjur-api.version>3.0.4</conjur-api.version>
-		<aws-java-sdk-core.version>1.12.101</aws-java-sdk-core.version>
-		<image.name>${project.artifactId}</image.name>
+		<aws-java-sdk.version>1.12.101</aws-java-sdk.version>
+		<wrapper.version>1.0.27.RELEASE</wrapper.version>
+		<aws-lambda-events.version>3.9.0</aws-lambda-events.version>
+		<spring-cloud-function.version>3.2.10</spring-cloud-function.version>
+		<image.name>docker.io/bnasslahsen/${project.artifactId}</image.name>
 	</properties>
-	
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-function-dependencies</artifactId>
+				<version>${spring-cloud-function.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jersey</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.cyberark.conjur.api</groupId>
 			<artifactId>conjur-api</artifactId>
 			<version>${conjur-api.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jersey</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-java-sdk-core</artifactId>
-			<version>${aws-java-sdk-core.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-sts</artifactId>
-			<version>${aws-java-sdk-core.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
+			<version>${aws-java-sdk.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -59,12 +61,9 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>
-							docker.io/bnasslahsen/${image.name}
-						</name>
+						<name>${image.name}</name>
 						<tags>
-							<tag>docker.io/bnasslahsen/${image.name}:${project.version}
-							</tag>
+							<tag>${image.name}:${project.version}</tag>
 						</tags>
 						<publish>true</publish>
 						<pullPolicy>IF_NOT_PRESENT</pullPolicy>
@@ -80,5 +79,44 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+	<profiles>
+		<profile>
+			<id>lambda</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-function-adapter-aws</artifactId>
+				</dependency>
+				<dependency>
+					<groupId>com.amazonaws</groupId>
+					<artifactId>aws-lambda-java-events</artifactId>
+					<version>${aws-lambda-events.version}</version>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<dependencies>
+							<dependency>
+								<groupId>org.springframework.boot.experimental</groupId>
+								<artifactId>spring-boot-thin-layout</artifactId>
+								<version>${wrapper.version}</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-shade-plugin</artifactId>
+						<configuration>
+							<createDependencyReducedPom>false</createDependencyReducedPom>
+							<shadedArtifactAttached>true</shadedArtifactAttached>
+							<shadedClassifierName>aws</shadedClassifierName>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
