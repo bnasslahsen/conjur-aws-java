@@ -1,0 +1,9 @@
+# conjur policy update -b root -f host-grants.yml
+
+- !grant
+  role: !group conjur/authn-iam/demo-aws/apps
+  member: !group  /data/bnl/aws-apps
+  
+- !grant
+  role: !group jwt-apps/secrets/consumers
+  member: !group  /data/bnl/aws-apps

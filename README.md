@@ -1,5 +1,16 @@
 # conjur-aws-java
 
+
+## Load the Conjur policies
+```shell    
+# Load conjur authenticator policy
+conjur policy update -f authn-aws.yml -b root
+# Load conjur hosts
+conjur policy update -f aws-hosts.yml -b data/bnl
+# Load Host grants
+conjur policy update -b root -f host-grants.yml
+```
+
 ## Building the Docker images
 ```shell
 mvn clean spring-boot:build-image
