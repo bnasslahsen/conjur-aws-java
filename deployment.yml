@@ -26,7 +26,7 @@ spec:
       containers:
         - name: conjur-aws-java
           image: bnasslahsen/conjur-aws-java
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           envFrom:
