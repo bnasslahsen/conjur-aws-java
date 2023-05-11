@@ -13,7 +13,6 @@ kubectl create configmap conjur-connect-aws-java \
   --from-literal CONJUR_APPLIANCE_URL="$CONJUR_APPLIANCE_URL" \
   --from-literal CONJUR_AUTHN_URL="$CONJUR_AUTHN_URL" \
   --from-literal AWS_SERVICE_TYPE="EKS" \
-  --from-literal LOGGING_LEVEL_ORG_CYBERARK=DEBUG  \
   --from-file "CONJUR_SSL_CERTIFICATE=$CONJUR_CERT_FILE"
 
 # DEPLOYMENT
