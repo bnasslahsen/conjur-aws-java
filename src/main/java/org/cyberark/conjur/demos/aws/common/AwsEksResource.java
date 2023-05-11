@@ -1,4 +1,4 @@
-package org.cyberark.conjur.demos.aws;
+package org.cyberark.conjur.demos.aws.common;
 
 import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.auth.WebIdentityTokenCredentialsProvider;
@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Component;
 
-import static org.cyberark.conjur.demos.aws.Constants.AWS_WEB_IDENTITY_TOKEN_FILE;
+import static org.cyberark.conjur.demos.aws.common.Constants.AWS_WEB_IDENTITY_TOKEN_FILE;
 
 /**
  * @author bnasslahsen

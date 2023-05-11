@@ -1,8 +1,11 @@
 package org.cyberark.conjur.demos.aws;
 
+import java.util.function.Function;
+
 import javax.net.ssl.SSLContext;
 
 import com.cyberark.conjur.api.Conjur;
+import org.cyberark.conjur.demos.aws.service.ConjurAwsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,9 +13,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import java.util.function.Function;
 
-import static org.cyberark.conjur.demos.aws.Constants.CONJUR_SECRET_KEY;
+import static org.cyberark.conjur.demos.aws.common.Constants.CONJUR_SECRET_KEY;
 
 /**
  * @author bnasslahsen

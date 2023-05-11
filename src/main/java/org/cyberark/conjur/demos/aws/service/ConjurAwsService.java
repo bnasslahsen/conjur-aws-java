@@ -1,4 +1,4 @@
-package org.cyberark.conjur.demos.aws;
+package org.cyberark.conjur.demos.aws.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -26,6 +26,7 @@ import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.http.HttpMethodName;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.cyberark.conjur.demos.aws.common.AwsResourceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,18 +34,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import static org.apache.http.conn.ssl.SSLConnectionSocketFactory.TLS;
-import static org.cyberark.conjur.demos.aws.Constants.AWS_ENDPOINT;
-import static org.cyberark.conjur.demos.aws.Constants.AWS_REGION;
-import static org.cyberark.conjur.demos.aws.Constants.AWS_SERVICE_NAME;
-import static org.cyberark.conjur.demos.aws.Constants.CONJUR_CERT_FILE;
-import static org.cyberark.conjur.demos.aws.Constants.CONJUR_PREFIX;
-import static org.cyberark.conjur.demos.aws.Constants.CONJUR_SSL_CERTIFICATE;
-import static org.cyberark.conjur.demos.aws.Constants.CONJUR_TLS_CA_PATH;
-import static org.cyberark.conjur.demos.aws.Constants.GET_CALLER_IDENTITY;
-import static org.cyberark.conjur.demos.aws.Constants.GET_CALLER_IDENTITY_VERSION;
-import static org.cyberark.conjur.demos.aws.Constants.REQUEST_ACTION;
-import static org.cyberark.conjur.demos.aws.Constants.REQUEST_VERSION;
-import static org.cyberark.conjur.demos.aws.Constants.X_509;
+import static org.cyberark.conjur.demos.aws.common.Constants.AWS_ENDPOINT;
+import static org.cyberark.conjur.demos.aws.common.Constants.AWS_REGION;
+import static org.cyberark.conjur.demos.aws.common.Constants.AWS_SERVICE_NAME;
+import static org.cyberark.conjur.demos.aws.common.Constants.CONJUR_CERT_FILE;
+import static org.cyberark.conjur.demos.aws.common.Constants.CONJUR_PREFIX;
+import static org.cyberark.conjur.demos.aws.common.Constants.CONJUR_SSL_CERTIFICATE;
+import static org.cyberark.conjur.demos.aws.common.Constants.CONJUR_TLS_CA_PATH;
+import static org.cyberark.conjur.demos.aws.common.Constants.GET_CALLER_IDENTITY;
+import static org.cyberark.conjur.demos.aws.common.Constants.GET_CALLER_IDENTITY_VERSION;
+import static org.cyberark.conjur.demos.aws.common.Constants.REQUEST_ACTION;
+import static org.cyberark.conjur.demos.aws.common.Constants.REQUEST_VERSION;
+import static org.cyberark.conjur.demos.aws.common.Constants.X_509;
 
 /**
  * @author bnasslahsen
@@ -63,14 +64,14 @@ public class ConjurAwsService {
 		this.objectMapper = objectMapper;
 	}
 	
-	String getConjurAuthnLogin() {
+	public String getConjurAuthnLogin() {
 		String arnString = awsResourceProvider.getArn();
 		Arn arn = Arn.fromString(arnString);
 		String roleName = arn.getResourceAsString().split("/")[1];
 		return String.format(CONJUR_PREFIX + "/%s/%s", arn.getAccountId(), roleName);
 	}
 
-	String getConjurAuthnApiKey() throws JsonProcessingException {
+	public String getConjurAuthnApiKey() throws JsonProcessingException {
 		BasicSessionCredentials awsCredentials = awsResourceProvider.getCredentials();
 		AWS4Signer signer = new AWS4Signer();
 		signer.setServiceName(AWS_SERVICE_NAME);
@@ -84,7 +85,7 @@ public class ConjurAwsService {
 		return signedRequestHeaders;
 	}
 
-	SSLContext createSslContext() throws CertificateException, IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+	public SSLContext createSslContext() throws CertificateException, IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
 		final Certificate certificate = generateCertificate();
 		KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
 		keyStore.load(null);

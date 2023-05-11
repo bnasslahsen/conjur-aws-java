@@ -1,4 +1,4 @@
-package org.cyberark.conjur.demos.aws;
+package org.cyberark.conjur.demos.aws.common;
 
 import com.amazonaws.auth.BasicSessionCredentials;
 

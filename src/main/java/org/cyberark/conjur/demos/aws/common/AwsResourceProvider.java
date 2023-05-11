@@ -1,4 +1,4 @@
-package org.cyberark.conjur.demos.aws;
+package org.cyberark.conjur.demos.aws.common;
 
 import java.util.Objects;
 
@@ -6,7 +6,7 @@ import com.amazonaws.auth.BasicSessionCredentials;
 
 import org.springframework.stereotype.Component;
 
-import static org.cyberark.conjur.demos.aws.Constants.AWS_SERVICE_TYPE;
+import static org.cyberark.conjur.demos.aws.common.Constants.AWS_SERVICE_TYPE;
 
 /**
  * @author bnasslahsen
