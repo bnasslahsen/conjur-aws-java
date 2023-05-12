@@ -1,0 +1,5 @@
+# conjur policy update -b data/bnl/aws-apps -f host-grants.yml
+  
+- !grant
+  role: !group  secrets/consumers
+  member: !group  /data/bnl/aws-apps

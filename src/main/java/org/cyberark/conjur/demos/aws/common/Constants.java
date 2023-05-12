@@ -8,7 +8,7 @@ public class Constants {
 	public static final String CONJUR_SSL_CERTIFICATE = 	System.getenv().getOrDefault("CONJUR_SSL_CERTIFICATE", null);
 	public static final String CONJUR_CERT_FILE =System.getenv().getOrDefault("CONJUR_CERT_FILE", null);
 	public static final String CONJUR_PREFIX= System.getenv().getOrDefault("CONJUR_PREFIX", "host/data/bnl/aws-apps" );
-	public static final String CONJUR_SECRET_KEY =  System.getenv().getOrDefault("CONJUR_PREFIX", "jwt-apps/secrets/password" );
+	public static final String CONJUR_SECRET_KEY =  System.getenv().getOrDefault("CONJUR_SECRET_KEY", "jwt-apps/secrets/password" );
 
 	public static final String AWS_SERVICE_TYPE = System.getenv().getOrDefault("AWS_SERVICE_TYPE", null);;
 	public static final String AWS_SERVICE_NAME =  System.getenv().getOrDefault("SERVICE_NAME", "sts" ) ;

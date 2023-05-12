@@ -68,7 +68,9 @@ public class ConjurAwsService {
 		String arnString = awsResourceProvider.getArn();
 		Arn arn = Arn.fromString(arnString);
 		String roleName = arn.getResourceAsString().split("/")[1];
-		return String.format(CONJUR_PREFIX + "/%s/%s", arn.getAccountId(), roleName);
+		String conjurAuthnLogin = String.format(CONJUR_PREFIX + "/%s/%s", arn.getAccountId(), roleName);
+		LOGGER.debug("Conjur authn login: {}", conjurAuthnLogin);
+		return conjurAuthnLogin;
 	}
 
 	public String getConjurAuthnApiKey() throws JsonProcessingException {
@@ -81,7 +83,7 @@ public class ConjurAwsService {
 		// Sign it!
 		signer.sign(request, awsCredentials);
 		String signedRequestHeaders = objectMapper.writeValueAsString(request.getHeaders());
-		LOGGER.debug(signedRequestHeaders);
+		LOGGER.debug("Signed request headers: {}", signedRequestHeaders);
 		return signedRequestHeaders;
 	}
 

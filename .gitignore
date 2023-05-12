@@ -8,6 +8,7 @@ target/
 *.iws
 *.iml
 *.ipr
+.env-cloud
 
 ### Eclipse ###
 .apt_generated

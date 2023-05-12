@@ -1,0 +1,15 @@
+# conjur policy update -f authn-aws.yml -b conjur/authn-iam
+
+- !policy
+  id: demo-aws
+  body:
+    - !webservice
+    - !group apps
+    - !permit
+      role: !group apps
+      privilege: [ read, authenticate ]
+      resource: !webservice
+
+- !grant
+  role: !group demo-aws/apps
+  member: !group  /data/bnl/aws-apps
