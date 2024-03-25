@@ -1,9 +1,10 @@
 # conjur policy update -b root -f host-grants.yml
+- !grant
+  role: !group vault01/LOBUser1/safe-aws/delegation/consumers
+  member: !group /aws-apps
 
+# Authenticate privileges on Webservice
 - !grant
   role: !group conjur/authn-iam/demo-aws/apps
-  member: !group  /data/bnl/aws-apps
+  member: !group  /aws-apps
   
-- !grant
-  role: !group jwt-apps/secrets/consumers
-  member: !group  /data/bnl/aws-apps

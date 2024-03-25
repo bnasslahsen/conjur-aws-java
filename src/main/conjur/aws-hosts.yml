@@ -1,4 +1,4 @@
-# conjur policy update -f aws-hosts.yml -b data/bnl
+# conjur policy update -f aws-hosts.yml -b root
 - !policy
   id: aws-apps
   body:
@@ -6,10 +6,6 @@
     - &hosts
       - !host
         id: 179196310045/bnl-ec2-role
-      - !host
-        id: 179196310045/bnl-eks-pod-role
-      - !host
-        id: 179196310045/bnl-demo-role-bn5brzn5
     - !grant
       role: !group
       members: *hosts
